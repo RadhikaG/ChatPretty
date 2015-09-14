@@ -15,7 +15,6 @@ This works only on Python2.7, since I plan on porting it to Flask, which too onl
 * `chat.txt`: A WhatsApp copypasta for testing
 
 # To-do List
-* Separate sender and receiver messages
 * Add timestamps
 * Make web app
 * Make it graphically more accurate to the WhatsApp UI

@@ -20,8 +20,9 @@ WhatsAppAttr = {
 }
 
 class Message:
-    def __init__(self, appName, message):
-
+    def __init__(self, appName, person, message):
+        
+        self.person = person
         self.message = message
         retList = self.processMessage()
         self.sM = retList[0]
@@ -53,19 +54,28 @@ class Message:
         txt = Image.new('RGBA', (720, self.attrDict['textHeight']), (255, 255, 255, 0))
         txtD = ImageDraw.Draw(txt, 'RGBA')
         font = ImageFont.truetype('Roboto-Regular.ttf', self.attrDict['fontSize'])
-        
-        txtD.text((115+self.attrDict['bufferWidth'], 10+self.attrDict['bufferHeight']), self.sM, font=font, fill='#000000')
+       
+        if self.person == 'sender':
+            txtD.text((self.attrDict['xGapL']+self.attrDict['bufferWidth'], self.attrDict['yGapT']+self.attrDict['bufferHeight']), self.sM, font=font, fill='#000000')
+        else:
+            txtD.text((self.attrDict['xGapR']+self.attrDict['bufferWidth'], self.attrDict['yGapT']+self.attrDict['bufferHeight']), self.sM, font=font, fill='#000000')
+
         return txt
 
     def makeChatLine(self):#time, name, message):
         
         xGapL = self.attrDict['xGapL']
         yGapT = self.attrDict['yGapT']
-       
+        xGapR = self.attrDict['xGapR']
+
         im = Image.new('RGBA', (720, self.attrDict['totalHeight']), self.attrDict['backgroundColor'])
         imD = ImageDraw.Draw(im, 'RGBA')
-        imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'], self.attrDict['outlineColor'])
-       
+        
+        if self.person == 'sender':
+            imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'], self.attrDict['outlineColor'])
+        else:
+            imD.rectangle([(xGapR, yGapT), (xGapR + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor2'], self.attrDict['outlineColor'])
+
         txt = self.textFormat()
         out = Image.alpha_composite(im, txt)
         # out.show()
@@ -82,23 +92,38 @@ def parseChat():
     appName = 'WhatsApp'
 
     tEx = re.compile(r'\[[^a-zA-Z]*\]')
-    nEx = re.compile(r' [a-zA-Z ]*:')
-    mEx = re.compile(r'(?<=[a-zA-Z]:).*$')
+    nEx = re.compile(r'(?<= )[a-zA-Z]+[^:]*')
+    mEx = re.compile(r'(?<=[a-zA-Z]: ).*$')
 
     chatImgList = []
     chatHeightList = []
+    peopleList = []
+    
+    for line in f.readlines():
+        name = nEx.search(line).group()
+        if name not in peopleList:
+            peopleList.append(name)
+
+    you = findYou(peopleList)
+
+    f.seek(0)
 
     for line in f.readlines():
 
-        time = tEx.search(line)
-        name = nEx.search(line)
-        message = mEx.search(line)
+        time = tEx.search(line).group()
+        name = nEx.search(line).group()
+        message = mEx.search(line).group()
 
-        print time.group()
-        print name.group()
-        print message.group()
+        print time
+        print name
+        print message
+        
+        if name == you:
+            person = 'sender'
+        else:
+            person = 'receiver'
 
-        chatLineObj = Message(appName, message.group()) 
+        chatLineObj = Message(appName, person, message) 
         out = chatLineObj.makeChatLine()
 
         chatHeightList.append(chatLineObj.getChatHeight())
@@ -106,6 +131,13 @@ def parseChat():
 
     stitchChat(chatHeightList, chatImgList)
 
+
+def findYou(peopleList):
+    print "Who you? Answer with option number:"
+    print "1: " + peopleList[0]
+    print "2: " + peopleList[1]
+    pN = int(raw_input("Enter you: "))
+    return peopleList[pN-1]
 
 def stitchChat(chatHeightList, chatImgList):
 
