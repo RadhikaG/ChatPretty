@@ -45,19 +45,6 @@ class Message:
 
     def textFormat(self): #tested only with WhatsApp
 
-        # retList = processMessage(self.message)
-        # sM = retList[0]
-        # lenLines = retList[1] 
-
-        #all the following are WhatsApp specific
-        # fontSize = 32
-        # lineHeight = 60 #need to devote 40 pixels for each line of text
-        # bufferHeight = 10
-        # bufferWidth = 11 
-        # chatHeight = lineHeight*lenLines
-        # textHeight = bufferHeight + chatHeight + bufferHeight
-
-
         txt = Image.new('RGBA', (720, self.attrDict['textHeight']), (255, 255, 255, 0))
         txtD = ImageDraw.Draw(txt, 'RGBA')
         font = ImageFont.truetype('Roboto-Regular.ttf', self.attrDict['fontSize'])
@@ -69,35 +56,34 @@ class Message:
         
         xGapL = self.attrDict['xGapL']
         yGapT = self.attrDict['yGapT']
-        # maxWidth = 570
-        # xGapR = 35
-
-        #all the following are WhatsApp specific
-        # bufferHeight = 10
-        # lineHeight = 60
-        # lenLines = processMessage(message)[1]
-        # chatHeight = lineHeight*lenLines
-        # totalHeight = bufferHeight + chatHeight + bufferHeight
-        
+       
         im = Image.new('RGBA', (720, self.attrDict['totalHeight']), self.attrDict['backgroundColor']) #replace totalHeight with 1280 for full screen
         imD = ImageDraw.Draw(im, 'RGBA')
         imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'])
        
         txt = self.textFormat()
         out = Image.alpha_composite(im, txt)
-        out.show()
+        # out.show()
         return out
+
+    def getChatHeight(self):
+        # print self.attrDict['totalHeight']
+        return self.attrDict['totalHeight']
+
 
 def parseChat():
     f = open('chat.txt','r')
-    chatImgList = []
     appName = 'WhatsApp'
 
     tEx = re.compile(r'\[[^a-zA-Z]*\]')
     nEx = re.compile(r' [a-zA-Z ]*:')
     mEx = re.compile(r'(?<=[a-zA-Z]:).*$')
 
+    chatImgList = []
+    chatHeightList = []
+
     for line in f.readlines():
+
         time = tEx.search(line)
         name = nEx.search(line)
         message = mEx.search(line)
@@ -108,8 +94,27 @@ def parseChat():
 
         chatLineObj = Message(appName, message.group()) 
         out = chatLineObj.makeChatLine()
-        # chatLineObj = makeChatLine(time.group(), name.group(), message.group())
-        chatImgList.append(out)    
+
+        chatHeightList.append(chatLineObj.getChatHeight())
+        chatImgList.append(out)
+
+    stitchChat(chatHeightList, chatImgList)
+
+
+def stitchChat(chatHeightList, chatImgList):
+    screenHeight = sum(chatHeightList)
+    im = Image.new('RGBA', (720, screenHeight), WhatsAppAttr['backgroundColor'])
+    
+    offset = [0, 0]
+    i = 0
+
+    for img in chatImgList:
+        offsetTuple = tuple(offset)
+        im.paste(img, offsetTuple)
+        offset[1] += chatHeightList[i]
+        i += 1
+
+    im.show()
 
 
 sampS = """
