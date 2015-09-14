@@ -4,11 +4,15 @@ from PIL import Image, ImageDraw, ImageFont
 
 WhatsAppAttr = {
         'fontSize': 32, 
+        # 'lineHeight': 55,
         'lineHeight': 60, 
-        'bufferHeight': 10, 
+        'bufferHeight': 5,
+        # 'bufferHeight': 10, 
         'bufferWidth': 11, 
-        'backgroundColor': '#fffee8', 
+        'backgroundColor': '#efe7de', 
+        'outlineColor': '#c5bfb6',
         'chatboxColor1': '#e1ffc7',
+        'chatboxColor2': '#ffffff',
         'xGapL': 115,
         'xGapR': 35,
         'yGapT': 10,
@@ -17,6 +21,7 @@ WhatsAppAttr = {
 
 class Message:
     def __init__(self, appName, message):
+
         self.message = message
         retList = self.processMessage()
         self.sM = retList[0]
@@ -26,7 +31,7 @@ class Message:
             global WhatsAppAttr
             self.attrDict = WhatsAppAttr
 
-        self.attrDict['chatHeight'] = self.attrDict['lineHeight']*self.lenLines 
+        self.attrDict['chatHeight'] = self.attrDict['lineHeight'] * self.lenLines 
         self.attrDict['textHeight'] = self.attrDict['bufferHeight'] + self.attrDict['chatHeight'] + self.attrDict['bufferHeight']
         self.attrDict['totalHeight'] = self.attrDict['bufferHeight'] + self.attrDict['chatHeight'] + self.attrDict['bufferHeight']
 
@@ -57,9 +62,9 @@ class Message:
         xGapL = self.attrDict['xGapL']
         yGapT = self.attrDict['yGapT']
        
-        im = Image.new('RGBA', (720, self.attrDict['totalHeight']), self.attrDict['backgroundColor']) #replace totalHeight with 1280 for full screen
+        im = Image.new('RGBA', (720, self.attrDict['totalHeight']), self.attrDict['backgroundColor'])
         imD = ImageDraw.Draw(im, 'RGBA')
-        imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'])
+        imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'], self.attrDict['outlineColor'])
        
         txt = self.textFormat()
         out = Image.alpha_composite(im, txt)
@@ -72,6 +77,7 @@ class Message:
 
 
 def parseChat():
+
     f = open('chat.txt','r')
     appName = 'WhatsApp'
 
@@ -102,6 +108,7 @@ def parseChat():
 
 
 def stitchChat(chatHeightList, chatImgList):
+
     screenHeight = sum(chatHeightList)
     im = Image.new('RGBA', (720, screenHeight), WhatsAppAttr['backgroundColor'])
     
@@ -125,5 +132,4 @@ I say, back down, I ain't done with you. So I'm a playah'.
 sampS1 = "Suddenly, I don't need to go to the bathroom anymore."
 sampS2 = "I just got an offer to work with one of the maintainers of the Mozilla project."
 
-# makeChatLine(sampS2)
 parseChat()
