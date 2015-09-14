@@ -62,7 +62,7 @@ class Message:
 
         return txt
 
-    def makeChatLine(self):#time, name, message):
+    def makeChatLine(self):
         
         xGapL = self.attrDict['xGapL']
         yGapT = self.attrDict['yGapT']
@@ -84,6 +84,31 @@ class Message:
     def getChatHeight(self):
         # print self.attrDict['totalHeight']
         return self.attrDict['totalHeight']
+
+
+def findYou(peopleList):
+    print "Who you? Answer with option number:"
+    print "1: " + peopleList[0]
+    print "2: " + peopleList[1]
+    pN = int(raw_input("Enter you: "))
+    return peopleList[pN-1]
+
+
+def stitchChat(chatHeightList, chatImgList):
+
+    screenHeight = sum(chatHeightList)
+    im = Image.new('RGBA', (720, screenHeight), WhatsAppAttr['backgroundColor'])
+    
+    offset = [0, 0]
+    i = 0
+
+    for img in chatImgList:
+        offsetTuple = tuple(offset)
+        im.paste(img, offsetTuple)
+        offset[1] += chatHeightList[i]
+        i += 1
+
+    im.show()
 
 
 def parseChat():
@@ -131,37 +156,5 @@ def parseChat():
 
     stitchChat(chatHeightList, chatImgList)
 
-
-def findYou(peopleList):
-    print "Who you? Answer with option number:"
-    print "1: " + peopleList[0]
-    print "2: " + peopleList[1]
-    pN = int(raw_input("Enter you: "))
-    return peopleList[pN-1]
-
-def stitchChat(chatHeightList, chatImgList):
-
-    screenHeight = sum(chatHeightList)
-    im = Image.new('RGBA', (720, screenHeight), WhatsAppAttr['backgroundColor'])
-    
-    offset = [0, 0]
-    i = 0
-
-    for img in chatImgList:
-        offsetTuple = tuple(offset)
-        im.paste(img, offsetTuple)
-        offset[1] += chatHeightList[i]
-        i += 1
-
-    im.show()
-
-
-sampS = """
-I like it rough, I like it mean. I like it tough, I like it lean. 
-Oh, so I'm a playah', I know. I need no excuses, I know what I choose, I'm tired of you. Whiskeeey, runnin' down your chest.
-I say, back down, I ain't done with you. So I'm a playah'.
-"""
-sampS1 = "Suddenly, I don't need to go to the bathroom anymore."
-sampS2 = "I just got an offer to work with one of the maintainers of the Mozilla project."
 
 parseChat()
