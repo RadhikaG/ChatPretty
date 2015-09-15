@@ -60,17 +60,15 @@ class Message:
 
         txt = Image.new('RGBA', (720, self.attrDict['textHeight']), (255, 255, 255, 0))
         txtD = ImageDraw.Draw(txt, 'RGBA')
-        chatFont = ImageFont.truetype('Roboto-Regular.ttf', self.attrDict['fontSize'])
-        timeFont = ImageFont.truetype('Roboto-Regular.ttf', 25)
+        chatFont = ImageFont.truetype('whatsapp_assets/Roboto-Regular.ttf', self.attrDict['fontSize'])
+        timeFont = ImageFont.truetype('whatsapp_assets/Roboto-Regular.ttf', 25)
 
        
         if self.person == 'sender':
             txtD.text((self.attrDict['xGapL'] + self.attrDict['bufferWidth'], self.attrDict['yGapT'] + self.attrDict['bufferHeight']), self.sM, font=chatFont, fill='#000000')
-            # txtD.text((575, self.attrDict['textHeight']), self.time, font=timeFont, fill='#879977')
-            txtD.text((580, self.attrDict['textHeight']-35), self.time, font=timeFont, fill='#879977')
+            txtD.text((575, self.attrDict['textHeight']-35), self.time, font=timeFont, fill='#879977')
         else:
             txtD.text((self.attrDict['xGapR'] + self.attrDict['bufferWidth'], self.attrDict['yGapT'] + self.attrDict['bufferHeight']), self.sM, font=chatFont, fill='#000000')
-            # txtD.text((550, self.attrDict['textHeight']), self.time, font=timeFont, fill='#879977')
             txtD.text((530, self.attrDict['textHeight']-35), self.time, font=timeFont, fill='#879977')
 
         return txt
@@ -89,13 +87,16 @@ class Message:
         else:
             imD.rectangle([(xGapR, yGapT), (xGapR + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor2'], self.attrDict['outlineColor'])
 
+        if self.person == 'sender':
+            blueTick = Image.open('whatsapp_assets/bluetick.png')
+            im.paste(blueTick, (643, self.attrDict['textHeight']-27)) #643 is the X-position, located 27 pixels from bottom of the chat snippet
+
         txt = self.textFormat()
         out = Image.alpha_composite(im, txt)
         # out.show()
         return out
 
     def getChatHeight(self):
-        # print self.attrDict['totalHeight']
         return self.attrDict['totalHeight']
 
 
@@ -104,7 +105,6 @@ def parseChat():
     f = open('chat.txt','r')
     appName = 'WhatsApp'
 
-    # tEx = re.compile(r'\[[^a-zA-Z]*\]')
     tEx = re.compile(r'(?<=[0-9] )[0-9:]+[^\]]')
     nEx = re.compile(r'(?<= )[a-zA-Z]+[^:]*')
     mEx = re.compile(r'(?<=[a-zA-Z]: ).*$')
@@ -152,16 +152,18 @@ def findYou(peopleList):
         dispStr = str(i+1) + ': ' + peopleList[i]
         print dispStr
     
-    pN = int(raw_input("Enter you. Type option number: "))
+    pN = int(raw_input("Type option number: "))
     return peopleList[pN-1]
 
 
 def stitchChat(chatHeightList, chatImgList):
 
     screenHeight = sum(chatHeightList)
-    im = Image.new('RGBA', (720, screenHeight), WhatsAppAttr['backgroundColor'])
-    
-    offset = [0, 0]
+    im = Image.new('RGBA', (720, 163+screenHeight+230), WhatsAppAttr['backgroundColor'])
+   
+    im.paste(Image.open('whatsapp_assets/top.png'), (0, 0))
+
+    offset = [0, 163]
     i = 0
 
     for img in chatImgList:
@@ -169,6 +171,9 @@ def stitchChat(chatHeightList, chatImgList):
         im.paste(img, offsetTuple)
         offset[1] += chatHeightList[i]
         i += 1
+    
+    offsetTuple = tuple(offset)
+    im.paste(Image.open('whatsapp_assets/bottom.png'), offsetTuple)
 
     im.show()
 
