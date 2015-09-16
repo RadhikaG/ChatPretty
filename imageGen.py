@@ -153,7 +153,7 @@ class Message:
     # stitchChat(chatHeightList, chatImgList, you, peopleList)
 
 
-def parseChat(lines):
+def parseChat(you, lines):
 
     lines = lines.split('\n')
     appName = 'WhatsApp'
@@ -171,7 +171,7 @@ def parseChat(lines):
         if name not in peopleList:
             peopleList.append(name)
 
-    you = findYou(peopleList)
+    # you = findYou(peopleList)
 
     for line in lines:
 
@@ -229,7 +229,7 @@ def stitchChat(chatHeightList, chatImgList, you, peopleList):
 
     imD = ImageDraw.Draw(im, 'RGBA')
 
-    if len(peopleList) > 2:
+    if len(peopleList) > 2 or you == "None of the above":
         titleText = 'Group'
     else:
         for i in peopleList:

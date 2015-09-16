@@ -15,7 +15,6 @@ This works only on Python2.7, since I plan on porting it to Flask, which too onl
 * `server.py`: The Flask app which uses `imageGen.py`
 
 # To-do List
-* Add dynamic detection of people in the chat to web app
 * Make it fully-compatible with group chats
 * Make it graphically more accurate to the WhatsApp UI
 

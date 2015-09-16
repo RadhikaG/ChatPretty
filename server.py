@@ -9,15 +9,13 @@ app = Flask(__name__)
 def home_page():
     method = request.method
     chatStr = request.form.get("chatStr")
+    you = request.form.get("person")
     if method == "POST":
-        chatImg = imageGen.parseChat(chatStr)
+        chatImg = imageGen.parseChat(you, chatStr)
         return download_file(chatImg)
-        # chatImg.save('chatImg.jpeg')
-        # return send_file('chatImg.jpeg', as_attachment=True)
     return render_template("home.html")
 
 
-# @app.route('/download')
 def download_file(chatImg):
     if chatImg is not None:
         return serve_pil_image(chatImg)
