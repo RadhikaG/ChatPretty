@@ -11,7 +11,6 @@ This works only on Python2.7, since I plan on porting it to Flask, which too onl
 
 **About the files:**
 * `timeName.py`: The actual Python script
-* `timeName.sh`: For testing regexes
 * `chat.txt`: A WhatsApp copypasta for testing
 
 # To-do List
