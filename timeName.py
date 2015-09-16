@@ -1,6 +1,7 @@
 import re
 import textwrap
 from PIL import Image, ImageDraw, ImageFont
+from datetime import datetime
 
 WhatsAppAttr = {
         'fontSize': 32, 
@@ -13,10 +14,13 @@ WhatsAppAttr = {
         'outlineColor': '#c5bfb6',
         'chatboxColor1': '#e1ffc7',
         'chatboxColor2': '#ffffff',
+        'timeColor': '#879977',
         'xGapL': 115,
         'xGapR': 35,
         'yGapT': 10,
-        'maxWidth': 570,
+        'xSTime': 575,
+        'xRTime': 530,
+        'chatWidth': 570,
 }
 
 class Message:
@@ -37,11 +41,6 @@ class Message:
         self.attrDict['textHeight'] = self.attrDict['bufferHeight'] + self.attrDict['chatHeight'] + self.attrDict['bufferHeight']
         self.attrDict['totalHeight'] = self.attrDict['bufferHeight'] + self.attrDict['chatHeight'] + self.attrDict['bufferHeight']
         
-        # self.makeVariables()
-
-    # def makeVariables(self):
-        # for key in self.attrDict.keys():
-            # varName = 'self.' + key
         
     def processMessage(self):
         
@@ -66,10 +65,10 @@ class Message:
        
         if self.person == 'sender':
             txtD.text((self.attrDict['xGapL'] + self.attrDict['bufferWidth'], self.attrDict['yGapT'] + self.attrDict['bufferHeight']), self.sM, font=chatFont, fill='#000000')
-            txtD.text((575, self.attrDict['textHeight']-35), self.time, font=timeFont, fill='#879977')
+            txtD.text((self.attrDict['xSTime'], self.attrDict['textHeight']-35), self.time, font=timeFont, fill=self.attrDict['timeColor'])
         else:
             txtD.text((self.attrDict['xGapR'] + self.attrDict['bufferWidth'], self.attrDict['yGapT'] + self.attrDict['bufferHeight']), self.sM, font=chatFont, fill='#000000')
-            txtD.text((530, self.attrDict['textHeight']-35), self.time, font=timeFont, fill='#879977')
+            txtD.text((self.attrDict['xRTime'], self.attrDict['textHeight']-35), self.time, font=timeFont, fill=self.attrDict['timeColor'])
 
         return txt
 
@@ -83,9 +82,9 @@ class Message:
         imD = ImageDraw.Draw(im, 'RGBA')
         
         if self.person == 'sender':
-            imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'], self.attrDict['outlineColor'])
+            imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['chatWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'], self.attrDict['outlineColor'])
         else:
-            imD.rectangle([(xGapR, yGapT), (xGapR + self.attrDict['maxWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor2'], self.attrDict['outlineColor'])
+            imD.rectangle([(xGapR, yGapT), (xGapR + self.attrDict['chatWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor2'], self.attrDict['outlineColor'])
 
         if self.person == 'sender':
             blueTick = Image.open('whatsapp_assets/bluetick.png')
@@ -143,7 +142,7 @@ def parseChat():
         chatHeightList.append(chatLineObj.getChatHeight())
         chatImgList.append(out)
 
-    stitchChat(chatHeightList, chatImgList)
+    stitchChat(chatHeightList, chatImgList, you, peopleList)
 
 
 def findYou(peopleList):
@@ -156,7 +155,7 @@ def findYou(peopleList):
     return peopleList[pN-1]
 
 
-def stitchChat(chatHeightList, chatImgList):
+def stitchChat(chatHeightList, chatImgList, you, peopleList):
 
     screenHeight = sum(chatHeightList)
     im = Image.new('RGBA', (720, 163+screenHeight+230), WhatsAppAttr['backgroundColor'])
@@ -173,7 +172,24 @@ def stitchChat(chatHeightList, chatImgList):
         i += 1
     
     offsetTuple = tuple(offset)
-    im.paste(Image.open('whatsapp_assets/bottom.png'), offsetTuple)
+    im.paste(Image.open('whatsapp_assets/bottom.png'), offsetTuple) 
+
+    imD = ImageDraw.Draw(im, 'RGBA')
+
+    if len(peopleList) > 2:
+        titleText = 'Group'
+    else:
+        for i in peopleList:
+            if i != you:
+                rec = i
+        titleText = rec
+
+    titleFont = ImageFont.truetype('whatsapp_assets/Roboto-Bold.ttf', 35)
+    imD.text((140, 80), titleText, font=titleFont, fill='#ffffff') 
+    
+    dateText = datetime.now().strftime('%H:%M')
+    dateFont = ImageFont.truetype('whatsapp_assets/Roboto-Regular.ttf', 30)
+    imD.text((630, 6), dateText, font=dateFont, fill='#ffffff')
 
     im.show()
 
