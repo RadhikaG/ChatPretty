@@ -64,11 +64,17 @@ class Message:
 
        
         if self.person == 'sender':
-            txtD.text((self.attrDict['xGapL'] + self.attrDict['bufferWidth'], self.attrDict['yGapT'] + self.attrDict['bufferHeight']), self.sM, font=chatFont, fill='#000000')
-            txtD.text((self.attrDict['xSTime'], self.attrDict['textHeight']-35), self.time, font=timeFont, fill=self.attrDict['timeColor'])
+            txtD.text((self.attrDict['xGapL'] + self.attrDict['bufferWidth'], 
+                self.attrDict['yGapT'] + self.attrDict['bufferHeight']), 
+                self.sM, font=chatFont, fill='#000000')
+            txtD.text((self.attrDict['xSTime'], self.attrDict['textHeight']-35), 
+                    self.time, font=timeFont, fill=self.attrDict['timeColor'])
         else:
-            txtD.text((self.attrDict['xGapR'] + self.attrDict['bufferWidth'], self.attrDict['yGapT'] + self.attrDict['bufferHeight']), self.sM, font=chatFont, fill='#000000')
-            txtD.text((self.attrDict['xRTime'], self.attrDict['textHeight']-35), self.time, font=timeFont, fill=self.attrDict['timeColor'])
+            txtD.text((self.attrDict['xGapR'] + self.attrDict['bufferWidth'], 
+                self.attrDict['yGapT'] + self.attrDict['bufferHeight']), 
+                self.sM, font=chatFont, fill='#000000')
+            txtD.text((self.attrDict['xRTime'], self.attrDict['textHeight']-35), 
+                    self.time, font=timeFont, fill=self.attrDict['timeColor'])
 
         return txt
 
@@ -82,9 +88,11 @@ class Message:
         imD = ImageDraw.Draw(im, 'RGBA')
         
         if self.person == 'sender':
-            imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['chatWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor1'], self.attrDict['outlineColor'])
+            imD.rectangle([(xGapL, yGapT), (xGapL + self.attrDict['chatWidth'], yGapT + self.attrDict['chatHeight'])], 
+                    self.attrDict['chatboxColor1'], self.attrDict['outlineColor'])
         else:
-            imD.rectangle([(xGapR, yGapT), (xGapR + self.attrDict['chatWidth'], yGapT + self.attrDict['chatHeight'])], self.attrDict['chatboxColor2'], self.attrDict['outlineColor'])
+            imD.rectangle([(xGapR, yGapT), (xGapR + self.attrDict['chatWidth'], yGapT + self.attrDict['chatHeight'])], 
+                    self.attrDict['chatboxColor2'], self.attrDict['outlineColor'])
 
         if self.person == 'sender':
             blueTick = Image.open('whatsapp_assets/bluetick.png')
@@ -99,9 +107,55 @@ class Message:
         return self.attrDict['totalHeight']
 
 
-def parseChat():
+# def parseChat(filename):
 
-    f = open('chat.txt','r')
+    # f = open(filename,'r')
+    # appName = 'WhatsApp'
+
+    # tEx = re.compile(r'(?<=[0-9] )[0-9:]+[^\]]')
+    # nEx = re.compile(r'(?<= )[a-zA-Z]+[^:]*')
+    # mEx = re.compile(r'(?<=[a-zA-Z]: ).*$')
+
+    # chatImgList = []
+    # chatHeightList = []
+    # peopleList = []
+    
+    # for line in f.readlines():
+        # name = nEx.search(line).group()
+        # if name not in peopleList:
+            # peopleList.append(name)
+
+    # you = findYou(peopleList)
+
+    # f.seek(0)
+
+    # for line in f.readlines():
+
+        # time = tEx.search(line).group()
+        # name = nEx.search(line).group()
+        # message = mEx.search(line).group()
+
+        # print time
+        # print name
+        # print message
+        
+        # if name == you:
+            # person = 'sender'
+        # else:
+            # person = 'receiver'
+
+        # chatLineObj = Message(appName, time, person, message) 
+        # out = chatLineObj.makeChatLine()
+
+        # chatHeightList.append(chatLineObj.getChatHeight())
+        # chatImgList.append(out)
+
+    # stitchChat(chatHeightList, chatImgList, you, peopleList)
+
+
+def parseChat(lines):
+
+    lines = lines.split('\n')
     appName = 'WhatsApp'
 
     tEx = re.compile(r'(?<=[0-9] )[0-9:]+[^\]]')
@@ -112,16 +166,14 @@ def parseChat():
     chatHeightList = []
     peopleList = []
     
-    for line in f.readlines():
+    for line in lines:
         name = nEx.search(line).group()
         if name not in peopleList:
             peopleList.append(name)
 
     you = findYou(peopleList)
 
-    f.seek(0)
-
-    for line in f.readlines():
+    for line in lines:
 
         time = tEx.search(line).group()
         name = nEx.search(line).group()
@@ -142,7 +194,8 @@ def parseChat():
         chatHeightList.append(chatLineObj.getChatHeight())
         chatImgList.append(out)
 
-    stitchChat(chatHeightList, chatImgList, you, peopleList)
+    finalImg = stitchChat(chatHeightList, chatImgList, you, peopleList)
+    return finalImg
 
 
 def findYou(peopleList):
@@ -158,11 +211,11 @@ def findYou(peopleList):
 def stitchChat(chatHeightList, chatImgList, you, peopleList):
 
     screenHeight = sum(chatHeightList)
-    im = Image.new('RGBA', (720, 163+screenHeight+230), WhatsAppAttr['backgroundColor'])
+    im = Image.new('RGBA', (720, 163+screenHeight+230), WhatsAppAttr['backgroundColor']) #163 and 230 are heights of top.png and bottom.png resp.
    
     im.paste(Image.open('whatsapp_assets/top.png'), (0, 0))
 
-    offset = [0, 163]
+    offset = [0, 163] #163 is the height of top.png
     i = 0
 
     for img in chatImgList:
@@ -191,7 +244,15 @@ def stitchChat(chatHeightList, chatImgList, you, peopleList):
     dateFont = ImageFont.truetype('whatsapp_assets/Roboto-Regular.ttf', 30)
     imD.text((630, 6), dateText, font=dateFont, fill='#ffffff')
 
-    im.show()
+    # im.show()
+    
+    return im
 
+sampS = """[12/09 20:10] Foo: Family friends
+[12/09 20:10] Bar: It's always a pain in the ass to handle people like that as well as the doge.
+[12/09 20:11] Foo: Yeah
+[12/09 20:13] Bar: And it's so irritating to see parents forcing their fear on children who have no past experience with dogs."""
 
-parseChat()
+# f = open('chat.txt','r')
+# lines = f.readlines()
+# parseChat(sampS)
