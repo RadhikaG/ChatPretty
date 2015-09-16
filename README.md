@@ -1,4 +1,4 @@
-# ChatPrintr
+# ChatPretty
 A pretty-printer for (for now) WhatsApp chats.
 
 **This is still a work in progress.**
