@@ -35,8 +35,9 @@
                     var tmp = chatArr[i].match(/[a-zA-Z]+:/g);
                     tmp = tmp.toString();
                     $.trim(tmp);
-                    tmp = tmp.replace(/[^a-zA-Z ]/g, "");
-                    
+                    //tmp = tmp.replace(/[^a-zA-Z ]/g, "");
+                    tmp = tmp.replace(/:/g, "");
+
                     var there = -1;
                     
                     for(var j = 0; j < people.length; j++)
@@ -44,7 +45,8 @@
                         //sanitizing people[j]
                         people[j] = people[j].toString();
                         $.trim(people[j]);
-                        people[j] = people[j].replace(/[^a-zA-Z ]/g, "");
+                        //people[j] = people[j].replace(/[^a-zA-Z ]/g, "");
+                        people[j] = people[j].replace(/:/g, "");
 
                         if(tmp === people[j])
                         {
