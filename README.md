@@ -23,4 +23,4 @@ This works only on Python2.7, since I plan on porting it to Flask, which too onl
 
 * First create a virtualenv called my_env (or whatever you like). Make sure it uses Python2.7 and not Python3: `virtualenv -p /usr/bin/python2.7 my_env`
 * Activate your virtualenv, then run: `pip install flask` and `pip install Pillow`
-* Oh and of course, `git clone https://github.com/RadhikaG/ChatPretty.git`.
+* Oh and of course: `git clone https://github.com/RadhikaG/ChatPretty.git`.
