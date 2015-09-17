@@ -179,9 +179,9 @@ def parseChat(you, lines):
         name = nEx.search(line).group()
         message = mEx.search(line).group()
 
-        print time
-        print name
-        print message
+        # print time
+        # print name
+        # print message
         
         if name == you:
             person = 'sender'
@@ -248,10 +248,10 @@ def stitchChat(chatHeightList, chatImgList, you, peopleList):
     
     return im
 
-sampS = """[12/09 20:10] Foo: Family friends
-[12/09 20:10] Bar: It's always a pain in the ass to handle people like that as well as the doge.
-[12/09 20:11] Foo: Yeah
-[12/09 20:13] Bar: And it's so irritating to see parents forcing their fear on children who have no past experience with dogs."""
+# sampS = """[12/09 20:10] Foo: Family friends
+# [12/09 20:10] Bar: It's always a pain in the ass to handle people like that as well as the doge.
+# [12/09 20:11] Foo: Yeah
+# [12/09 20:13] Bar: And it's so irritating to see parents forcing their fear on children who have no past experience with dogs."""
 
 # f = open('chat.txt','r')
 # lines = f.readlines()

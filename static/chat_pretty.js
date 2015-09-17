@@ -1,44 +1,46 @@
 $(document).ready(function(){
     $("#chat-text").change(function() {
 
-        if("Foo:" == "Foo:")
-            console.log("Yay");
-        //some regex stuff goes here
-        //var nEx = '(?<= )[a-zA-Z]+[^:]*'; 
         var chatStr = document.getElementById("chat-text").value;
-        console.log(chatStr)
+        //console.log(chatStr)
         
         var chatArr = chatStr.split('\n')
-        console.log(chatArr)
+        //console.log(chatArr)
         
-        var people = new Array();
+        var people = [];
         for(i = 0; i < chatArr.length; i++)
         {
-            var tmp = chatArr[i].match(/[a-zA-Z]+:/g);
-            //var there = $.inArray(tmp, people);
-            
+            //sanitizing tmp
+            //var tmp = chatArr[i].match(/\] [a-zA-Z ]*:/g);
+            var tmp = chatArr[i].match(/\] [a-zA-Z]+[^:]*/g);
+            tmp = tmp.toString();
+            tmp = tmp.split("]").pop();
+            tmp = tmp.replace(/:/g, "");
+            $.trim(tmp);
+            //tmp = tmp.replace(/[^a-zA-Z ]/g, "");
+
+            console.log(tmp);
+
             var there = -1;
+            
             for(var j = 0; j < people.length; j++)
             {
-                console.log(tmp);
-                console.log(people[j]);
-                console.log(tmp == people[j]);
+                //sanitizing people[j]
+                people[j] = people[j].toString();
+                tmp = tmp.split("]").pop();
+                people[j] = people[j].replace(/:/g, "");
+                $.trim(people[j]);
+                //people[j] = people[j].replace(/[^a-zA-Z ]/g, "");
+
                 if(tmp === people[j])
                 {
                     there = 0;
                     break;
                 }
             }
-
-            console.log(there);
             
             if(there === -1)
-            {
-                console.log("Not there.");
                 people.push(tmp);
-                for(j = 0; j < people.length; j++)
-                    console.log(people[j]);
-            }
         }
 
         var $personChoice = $("#person-choice");
@@ -53,3 +55,4 @@ $(document).ready(function(){
     });
 
 });
+
