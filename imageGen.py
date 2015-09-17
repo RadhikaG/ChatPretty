@@ -44,14 +44,18 @@ class Message:
         
     def processMessage(self):
         
-        lines = textwrap.wrap(self.message, width=40)
-
+        senList = self.message.split('\n')
+        nofLines = 0
         sM = ''
-        for line in lines:
-            sM += line
-            sM += '\n'
-        
-        returnList = [sM, len(lines)]
+
+        for sen in senList:
+            line = textwrap.wrap(sen, width=39)
+            nofLines += len(line)
+            for elem in line:
+                sM += elem
+                sM += '\n'
+
+        returnList = [sM, nofLines]
         return returnList
 
 
@@ -107,52 +111,6 @@ class Message:
         return self.attrDict['totalHeight']
 
 
-# def parseChat(filename):
-
-    # f = open(filename,'r')
-    # appName = 'WhatsApp'
-
-    # tEx = re.compile(r'(?<=[0-9] )[0-9:]+[^\]]')
-    # nEx = re.compile(r'(?<= )[a-zA-Z]+[^:]*')
-    # mEx = re.compile(r'(?<=[a-zA-Z]: ).*$')
-
-    # chatImgList = []
-    # chatHeightList = []
-    # peopleList = []
-    
-    # for line in f.readlines():
-        # name = nEx.search(line).group()
-        # if name not in peopleList:
-            # peopleList.append(name)
-
-    # you = findYou(peopleList)
-
-    # f.seek(0)
-
-    # for line in f.readlines():
-
-        # time = tEx.search(line).group()
-        # name = nEx.search(line).group()
-        # message = mEx.search(line).group()
-
-        # print time
-        # print name
-        # print message
-        
-        # if name == you:
-            # person = 'sender'
-        # else:
-            # person = 'receiver'
-
-        # chatLineObj = Message(appName, time, person, message) 
-        # out = chatLineObj.makeChatLine()
-
-        # chatHeightList.append(chatLineObj.getChatHeight())
-        # chatImgList.append(out)
-
-    # stitchChat(chatHeightList, chatImgList, you, peopleList)
-
-
 def parseChat(you, lines):
 
     lines = lines.split('\n')
@@ -160,20 +118,39 @@ def parseChat(you, lines):
 
     tEx = re.compile(r'(?<=[0-9] )[0-9:]+[^\]]')
     nEx = re.compile(r'(?<= )[a-zA-Z]+[^:]*')
-    mEx = re.compile(r'(?<=[a-zA-Z]: ).*$')
+    # nEx = re.compile(r'(?<= )[a-zA-Z]+:')
+    # mEx = re.compile(r'(?<=[a-zA-Z]: ).*$')
+    mEx = re.compile(r'(?<=[a-zA-Z]: )((.|\n))*')
 
     chatImgList = []
     chatHeightList = []
     peopleList = []
+   
+    i = 0
     
+    while(i < len(lines)):
+        time = tEx.search(lines[i])
+        if time is None:
+            appLine = lines[i-1]+'\n'+lines[i]
+            lines[i-1] = appLine
+            lines.pop(i)
+        else:
+            i += 1
+
+    # print lines
+
     for line in lines:
         name = nEx.search(line).group()
         if name not in peopleList:
             peopleList.append(name)
+    
+    # print peopleList
 
     # you = findYou(peopleList)
 
     for line in lines:
+        
+        # print line
 
         time = tEx.search(line).group()
         name = nEx.search(line).group()
@@ -195,6 +172,7 @@ def parseChat(you, lines):
         chatImgList.append(out)
 
     finalImg = stitchChat(chatHeightList, chatImgList, you, peopleList)
+    # finalImg.show()
     return finalImg
 
 
@@ -248,11 +226,13 @@ def stitchChat(chatHeightList, chatImgList, you, peopleList):
     
     return im
 
-# sampS = """[12/09 20:10] Foo: Family friends
-# [12/09 20:10] Bar: It's always a pain in the ass to handle people like that as well as the doge.
-# [12/09 20:11] Foo: Yeah
-# [12/09 20:13] Bar: And it's so irritating to see parents forcing their fear on children who have no past experience with dogs."""
+sampS = """[12/09 20:10] Foo: Family friends
+Gigantic douchebags.
+[12/09 20:10] Bar: It's always a pain in the ass to handle people like that as well as the doge.
+They just keep whining.
+[12/09 20:11] Foo: Yeah
+[12/09 20:13] Bar: And it's so irritating to see parents forcing their fear on children who have no past experience with dogs."""
 
 # f = open('chat.txt','r')
 # lines = f.readlines()
-# parseChat(sampS)
+# parseChat("Foo", sampS)
