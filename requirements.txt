@@ -2,3 +2,4 @@ Flask==0.10.1
 Pillow==2.9.0
 Jinja2==2.8
 Werkzeug==0.10.4
+gunicorn==19.3.0
