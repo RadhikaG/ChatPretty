@@ -4,13 +4,15 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Theme shameless stolen from sample themes from bootstrap.com">
-        <meta name="author" content="Whoever originally worte this. Someone from bootstrap. Thanks.">
+        <meta name="title" content="Chat Pretty!">
+        <meta name="description" content="A WhatsApp screenshot stitcher for long conversations.">
+        <meta name="author" content="Radhika Ghosal, plus the amazing dude who made Bootstrap I guess.">
 
         <title>Chat Pretty!</title>
 
         <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="static/sticky-footer.css"> 
+        <link rel="stylesheet" type="text/css" href="static/css/social-share-kit.css">
         <!--<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">-->
         <!--<link href="http://getbootstrap.com/examples/sticky-footer/sticky-footer.css" rel="stylesheet">-->
         <!--[if lt IE 9]>
@@ -19,7 +21,8 @@
         <![endif]-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="static/js/chat_pretty.js"></script>
+        <script src="static/chat_pretty.js"></script>
+        <script src="static/social-share-kit.js"></script>
 
     </head>
 
@@ -33,7 +36,7 @@
             </div>
             
             <p class="lead">Gone are the days of taking 20 screenshots to send a conversation to a friend.</p>
-            <p class="lead">Enter your WhatsApp copypasta below and watch the magic.</p>
+            <p class="lead">Copy and paste your WhatsApp conversation below and watch the magic.</p>
             
             <form role="form" method="post" action="">
                 
@@ -45,13 +48,29 @@
                         <option>Who are you?</option>
                     </select>
 
-                    <p class="lead" style="font-size:15px; color:red;" id="error-text">Something is wrong with your pasted chat. Did you modify it after pasting it in the box? Try pasting it again.</p>
+                    <p class="lead" style="font-size:15px; color:red;" id="error-text">Something is wrong with your copypasta. Did you modify it after pasting it in the box? Try pasting it again.</p>
 
                 <button type="submit" class="btn btn-default" id="submit-button">Prettify!</button>
             
             </form>
         
         </div>
+
+        <footer class="footer">
+            <div class="container">
+
+                <div class="ssk-group ssk-round">
+                    <a href="" class="ssk ssk-facebook"></a>
+                    <a href="" class="ssk ssk-twitter"></a>
+                    <a href="" class="ssk ssk-google-plus"></a>
+                </div>
+
+            </div>
+        </footer>
+
+        <script type="text/javascript">
+        SocialShareKit.init();
+        </script>
 
     </body>
 
