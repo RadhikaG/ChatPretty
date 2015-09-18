@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     document.getElementById('error-text').style.visibility = "hidden";
     $('#submit-button').prop('disabled', true);
-    $('#person-choice').prop('disabled', true);
+    //$('#person-choice').prop('disabled', true);
     
     $("#chat-text").change(function() {
 
@@ -69,14 +69,14 @@ $(document).ready(function(){
              
              document.getElementById('error-text').style.visibility = "hidden";
              $('#submit-button').prop('disabled', false);
-             $('#person-choice').prop('disabled', false);
+             //$('#person-choice').prop('disabled', false);
 
          } 
          else
          {
              document.getElementById('error-text').style.visibility = "visible";
              $('#submit-button').prop('disabled', true);
-             $('#person-choice').prop('disabled', true);
+             //$('#person-choice').prop('disabled', true);
 
          }
     });
