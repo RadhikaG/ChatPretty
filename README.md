@@ -11,7 +11,6 @@ This works only on Python2.7, since I plan on porting it to Flask, which too onl
 
 **About the files:**
 * `imageGen.py`: The actual image generation script
-* `chat.txt`: A WhatsApp copypasta for testing
 * `server.py`: The Flask app which uses `imageGen.py`
 
 # To-do List
@@ -19,6 +18,8 @@ This works only on Python2.7, since I plan on porting it to Flask, which too onl
 * Make it graphically more accurate to the WhatsApp UI
 
 # Instructions
+
+This is just for the basic testing environment, not for deployment.
 
 * First create a virtualenv called my_env (or whatever you like). Make sure it uses Python2.7 and not Python3: `virtualenv -p /usr/bin/python2.7 my_env`
 * Activate your virtualenv, then run: `pip install flask` and `pip install Pillow`

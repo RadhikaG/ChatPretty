@@ -130,7 +130,9 @@ def parseChat(you, lines):
     
     while(i < len(lines)):
         time = tEx.search(lines[i])
-        if time is None:
+        name = nEx.search(lines[i])
+        message = mEx.search(lines[i])
+        if time is None or name is None or message is None:
             appLine = lines[i-1]+'\n'+lines[i]
             lines[i-1] = appLine
             lines.pop(i)
