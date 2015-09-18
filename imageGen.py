@@ -49,7 +49,7 @@ class Message:
         sM = ''
 
         for sen in senList:
-            line = textwrap.wrap(sen, width=39)
+            line = textwrap.wrap(sen, width=38)
             nofLines += len(line)
             for elem in line:
                 sM += elem
