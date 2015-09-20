@@ -117,7 +117,7 @@ def parseChat(you, lines):
     appName = 'WhatsApp'
 
     tEx = re.compile(r'(?<=[0-9] )[0-9:]+[^\]]')
-    nEx = re.compile(r'(?<= )[a-zA-Z]+[^:]*')
+    nEx = re.compile(r'(?<=\] )[a-zA-Z]+[^:]*')
     # nEx = re.compile(r'(?<= )[a-zA-Z]+:')
     # mEx = re.compile(r'(?<=[a-zA-Z]: ).*$')
     mEx = re.compile(r'(?<=[a-zA-Z]: )((.|\n))*')
@@ -228,13 +228,20 @@ def stitchChat(chatHeightList, chatImgList, you, peopleList):
     
     return im
 
-sampS = """[12/09 20:10] Foo: Family friends
+sampS1 = """[12/09 20:10] Foo: Family friends
 Gigantic douchebags.
 [12/09 20:10] Bar: It's always a pain in the ass to handle people like that as well as the doge.
 They just keep whining.
 [12/09 20:11] Foo: Yeah
 [12/09 20:13] Bar: And it's so irritating to see parents forcing their fear on children who have no past experience with dogs."""
 
+sampS2 = """[12/09 20:10 AM] Foo: Family friends
+Gigantic douchebags.
+[12/09 20:10 PM] Bar: It's always a pain in the ass to handle people like that as well as the doge.
+They just keep whining.
+[12/09 20:11 AM] Foo: Yeah
+[12/09 20:13 PM] Bar: And it's so irritating to see parents forcing their fear on children who have no past experience with dogs."""
+
 # f = open('chat.txt','r')
 # lines = f.readlines()
-# parseChat("Foo", sampS)
+# parseChat("Foo", sampS2)
