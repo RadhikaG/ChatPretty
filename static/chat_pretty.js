@@ -26,7 +26,7 @@ $(document).ready(function(){
          var people = [];
          for(i = 0; i < chatArr.length; i++)
          {
-             var dateTime = chatArr[i].match(/\[[0-9]+\/[0-9]+ [0-9]+:[0-9]+[( AM| PM)]*\]/g);
+             var dateTime = chatArr[i].match(/\[[0-9]+\/[0-9]+,? [0-9]+:[0-9]+[( AM| PM)]*\]/g);
              console.log(dateTime);
              if(dateTime != null)
              {
@@ -54,8 +54,7 @@ $(document).ready(function(){
                      people.push(tmp);
              }
          }
-
-         if(chatArr[0].match(/\[[0-9]+\/[0-9]+ [0-9]+:[0-9]+[( AM| PM)]*\]/g) != null)
+         if(chatArr[0].match(/\[[0-9]+\/[0-9]+,? [0-9]+:[0-9]+[( AM| PM)]*\]/g) != null)
          { 
              
              var $personChoice = $("#person-choice");
