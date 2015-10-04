@@ -15,6 +15,7 @@ This works only on Python2.7, since I plan on porting it to Flask, which too onl
 
 # To-do List
 * Make it fully-compatible with group chats
+* Add emoticon support
 * Make it graphically more accurate to the WhatsApp UI
 
 # Instructions
