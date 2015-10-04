@@ -11,7 +11,7 @@ $(document).ready(function(){
         $.trim(chatStr);
         
         var chatArr = chatStr.split('\n')
-     //console.log(chatArr)
+        //console.log(chatArr)
 
         var sanitize = function(inptStr){
              inptStr = inptStr.toString();
