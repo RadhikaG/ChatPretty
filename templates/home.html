@@ -10,16 +10,20 @@
 
         <title>Chat Pretty!</title>
 
-        <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="static/sticky-footer.css"> 
+        <!--<link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">-->
+        <!--<link href="static/media-queries.css" rel="stylesheet" />-->
+        <link rel="stylesheet" type="text/css" href="static/trial.css">
+        <link rel="stylesheet" type="text/css" href="static/animate.css">
+		<!--<link rel="stylesheet" type="text/css" href="static/css/sticky-footer.css">-->
         <link rel="stylesheet" type="text/css" href="static/css/social-share-kit.css">
+
         <!--<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">-->
         <!--<link href="http://getbootstrap.com/examples/sticky-footer/sticky-footer.css" rel="stylesheet">-->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-
+         <script type="text/javascript" src="static/position.topbar.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="static/chat_pretty.js"></script>
         <script src="static/social-share-kit.js"></script>
@@ -41,37 +45,45 @@
     <body>
 
         <!-- Begin page content -->
+
+        <div class="page-header fadeInUp animated" id="header">
+            <h1>
+            <div class="chat fadeInDownBig animated"CHAT>CHAT</div>
+            <div class="pretty fadeInLeftBig animated">PRETTY</div>
+            </h1>
+        </div>
+        <div class="banner fadeInDown animated">
+            <h4 class="fadeInDown animated" id="h_never">NEVER TAKE A WHATSAPP SCREENSHOT AGAIN</h4>
+        </div>
+
         <div class="container">
-            
-            <div class="page-header">
-                <h1>Chat Pretty!</h1>
-                <h4>Never take a WhatsApp screenshot again.</h4>
-            </div>
-            
-            <p class="lead">Gone are the days of taking 20 screenshots to send a conversation to a friend.</p>
-            <p class="lead">Copy and paste your WhatsApp conversation (by long pressing the messages on WhatsApp) below and watch the magic.</p>
-            <p class="lead">Group chats aren't fully supported yet, nor is iOS, due to issues with multiselecting chats on WhatsApp itself. Stay tuned, or feel free to <a href="https://github.com/RadhikaG/ChatPretty">fork my Git repo.</a></p>
+        	 <div class="d-text">
+        		 <p class="lead">Gone are the days of taking 20 screenshots to send a conversation to a friend.</p>
+        		 <p class="lead">Copy and paste your WhatsApp conversation (by long pressing the messages on WhatsApp) below and watch the magic.</p>
+        		 <p class="lead">Group chats aren't fully supported yet, nor is iOS, due to issues with multiselecting chats on WhatsApp itself. Stay tuned, or feel free to <a href="https://github.com/RadhikaG/ChatPretty" class="github-repo">fork my Git repo.</a>
+       		 </div>
 
             <form role="form" method="post" action="">
                 
                 <div class="form-group">
                     <textarea name="chatStr" class="form-control" id="chat-text"></textarea>
                 </div>
-
-                    <select name="person" class="form-control" id="person-choice">
-                        <option>Who are you?</option>
+                <div class="drop-down">
+                    <select name="person" class="form-control" id="person-choice">                        <option style="text-align: center;">Who are you?</option>
                     </select>
+                </div>
 
-                    <p class="lead" style="font-size:15px; color:red;" id="error-text">Something is wrong with your copypasta. Did you modify it after pasting it in the box? Try pasting it again.</p>
-
-                <button type="submit" class="btn btn-default" id="submit-button">Prettify!</button>
+                    <p class="lead" style="font-size:15px; color:#FD3B3B;" id="error-text">Something is wrong with your copypasta. Did you modify it after pasting it in the box? Try pasting it again.</p>
+                <div class="subbut">
+                <button type="submit" class="btn btn-default" id="submit-button">
+                <span class="normal">Prettify!</span>
+                </button>
+                </div>
             
             </form>
-        
         </div>
 
-        <footer class="footer">
-            <div class="container">
+            <div class="footer">
 
                 <div class="ssk-group ssk-round">
 
@@ -83,12 +95,9 @@
                 </div>
                 
             </div>
-        </footer>
-
         <script type="text/javascript">
         SocialShareKit.init();
         </script>
-
     </body>
 
 </html>
