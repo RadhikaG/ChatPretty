@@ -58,6 +58,8 @@ html, body{
 }
 .lead{
 	margin: 30px auto;
+	margin-left: 15em;
+	margin-right: 15em;
 	font: normal 20px Helvetica;
 	text-align: center;
 	position: relative;
@@ -68,14 +70,14 @@ html, body{
 }
 #submit-button{
 	color:#000000;
-	height: 35px;
+	height: 40px;
 	width: 130px;
 	background-color: #ECE8DC;
-	border-radius: 10px;
-	font:normal 20px Helvetica;
+	border-radius: 20px;
+	font:normal 30px Helvetica;
 	text-align: center;
 	opacity: 0.9;
-	border: 1px solid black;
+	border: 1px solid #075E55;
 	position: relative;
 	transition: all 0.3s ease-in-out;
 }
@@ -128,7 +130,6 @@ html, body{
 	border-radius: 20px;
 	position: relative;
 	padding: 0.1em 0.1em 0.1em 0.1em;
-
 }
 a{
 	background-color:transparent;
@@ -147,6 +148,169 @@ a:hover{
 	outline:0;
 	text-decoration: underline;
 	transition: all 0.3s ease-in;
+}
+
+
+/*********************MEDIA QUERIES : 900px************************/
+
+@media screen and (max-width: 900px){
+
+	html, body{
+		height: 990px;
+		width: 100%;
+		margin: 0px 0px 0px 0px;
+	}
+	.page-header{
+		top: 0px;
+		display: block;
+		width: 100%;
+		background-color: #222222;
+		height: 100px;
+		position: fixed;
+		color:#075E55;
+		box-shadow: 0 2px 2px 2px rgba(0,0,0,0.3);
+		z-index: 222;
+	}
+	.chat{
+		top: 0px;
+		margin-left: 10px;
+		float: left;
+		margin-top: 0px auto;
+		font: bold 80px Helvetica;
+		text-align: center;
+		position: relative;
+		}
+	.pretty{
+		top: 0px;
+		float: left;
+		color: white;
+		margin: 0px auto;
+		font: normal 80px Helvetica;
+		text-align: center;
+		position: relative;
+	}
+	#h_never{
+		position: relative;
+		margin: 60px;
+		font: normal 25px Helvetica;
+		text-align: center;
+	}
+	.banner{
+		top: 100px;
+		width: 100%;
+		background-color: #075E55;
+		height: 200px;
+		color:#eeeeee;
+		position: fixed;
+	}
+	.container{
+		background: #ECE8DC;
+		height: 100%;
+		width: 100%;
+		top: 250px;
+		text-align: center;
+		position: relative;
+		/*padding: 0.1em 0.5em 0.2em 0em;*/
+	}
+	.d-text{
+		padding: 1em 1em 0em 1em;
+	}
+	.lead{
+		margin: 15px auto;
+		font: normal 25px Helvetica;
+		text-align: left;
+		position: relative;
+	}
+	a{
+		background-color:transparent;
+		color: #075e55;
+		text-decoration: none;
+		transition: all 0.3s ease-in;
+		position: relative;
+	}
+	a:active{
+		color: #000000;
+		transition: all 0.3s ease-in;
+	}
+	a:hover{
+		opacity: 0.85;
+		color: #000000;
+		outline:0;
+		text-decoration: underline;
+		transition: all 0.3s ease-in;
+	}
+	#chat-text{
+		width: 65%;
+		margin: 3em auto;
+		height:150px;
+		border-radius: 10px;
+		position: relative;
+		border: 2px solid #075E55;
+	}
+	#person-choice{
+
+		background-color: #e3e3e3;
+		width: 45%;
+		border: 1px solid black;
+		margin:0.5em auto;
+		font: 25px bold Helvetica; 
+		color: #333333;
+		height: 45px;
+		border-radius: 20px;
+		position: relative;
+		padding: 0.1em 0.1em 0.1em 0.1em;
+
+	}
+	.subbut{
+		text-align: center;
+		position: relative;
+	}
+	#submit-button{
+		color:#131313;
+		height: 55px;
+		width: 110px;
+		background-color: #ECE8DC;
+		border-radius: 30px;
+		font:normal 25px Helvetica;
+		text-align: center;
+		opacity: 0.9;
+		border: 1px solid #18634B;
+		position: relative;
+		transition: all 0.3s ease-in-out;
+	}
+	#submit-button:hover{
+		text-align: center;
+		background-color: #ECE8DC;
+		border-radius: 30px;
+		color: #111111;
+		border: 3px solid #18634B;
+		position: relative;
+		transition: all 0.4s ease-in-out ;
+		opacity:0.85;
+	}
+	#submit-button:active{
+		text-align: center;
+		background-color: #075E55;
+		opacity: 1.0;
+		color: #f2f3f2;
+		border-radius: 30px;
+		position: relative;
+		transition: all 0.3s ease-in-out ;
+
+	}
+	.footer{
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+		height:45px;
+		background-color: #ECE8DC;
+		text-align: center;
+	}
+	#error-text{
+		text-align: left;
+		padding: 1em 1em 1em 1em;
+	}
+
 }
 
 
