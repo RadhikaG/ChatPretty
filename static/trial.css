@@ -1,5 +1,5 @@
 html, body{
-	height: 100%;
+	height: 990px;
 	width: 100%;
 	margin: 0px 0px 0px 0px;
 }
@@ -51,7 +51,6 @@ html, body{
 	margin: 92px;
 	font: normal 25px Helvetica;
 	text-align: center;
-	margin-top: 
 }
 .d-text{
 	padding: 2em 0em 0em 3em;
@@ -79,7 +78,7 @@ html, body{
 	opacity: 0.9;
 	border: 1px solid #075E55;
 	position: relative;
-	transition: all 0.3s ease-in-out;
+	transition: all 0.4s ease-in;
 }
 #submit-button:hover{
 	text-align: center;
@@ -88,8 +87,8 @@ html, body{
 	color: #111111;
 	border: 3px solid #18634B;
 	position: relative;
-	transition: all 0.4s ease-in-out ;
 	opacity:0.85;
+	transition: all 0.4s ease-in ;
 }
 #submit-button:active{
 	text-align: center;
@@ -98,7 +97,7 @@ html, body{
 	color: #f2f3f2;
 	border-radius: 30px;
 	position: relative;
-	transition: all 0.3s ease-in-out ;
+	transition: all 0.4s ease-in ;
 
 }
 
@@ -117,6 +116,8 @@ html, body{
 	border-radius: 10px;
 	position: relative;
 	border: 2px solid #075E55;
+	font: 20px normal;
+	font-family: Helvetica, sans-serif;
 }
 #person-choice{
 
@@ -124,7 +125,8 @@ html, body{
 	width: 25%;
 	border: 1px solid black;
 	margin:1em auto;
-	font: 35px bold Helvetica; 
+	font: 35px bold; 
+	font-family: Helvetica, sans-serif;
 	color: #333333;
 	height: 10%;
 	border-radius: 20px;
@@ -245,6 +247,7 @@ a:hover{
 		height:150px;
 		border-radius: 10px;
 		position: relative;
+		font-family: Helvetica, sans-serif;
 		border: 2px solid #075E55;
 	}
 	#person-choice{
@@ -257,6 +260,7 @@ a:hover{
 		color: #333333;
 		height: 45px;
 		border-radius: 20px;
+		font-family: Helvetica, sans-serif;
 		position: relative;
 		padding: 0.1em 0.1em 0.1em 0.1em;
 
@@ -408,7 +412,10 @@ a:hover{
 		width: 65%;
 		margin: 1em auto;
 		height:90px;
+		font: 25px normal;
 		border-radius: 10px;
+		font: 15px normal;
+		font-family: Helvetica, sans-serif;
 		position: relative;
 		border: 2px solid #075E55;
 	}
@@ -419,6 +426,7 @@ a:hover{
 		border: 1px solid black;
 		margin:0.5em auto;
 		font: 18px bold Helvetica; 
+		font-family: Helvetica, sans-serif;
 		color: #333333;
 		height: 35px;
 		border-radius: 20px;
